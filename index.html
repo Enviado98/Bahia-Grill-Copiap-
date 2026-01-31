@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & META -->
+    <title>Bahia Grill | Mar, Fuego y Sabor en Copiapó</title>
+    <meta name="description" content="El mejor restaurante de mariscos y parrilla en Copiapó. Pulpo asado, ceviches y terraza lounge. Abierto hasta tarde.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Barlow Condensed (Impacto) y Mulish (Moderno) -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Mulish:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Mulish', 'sans-serif'],
+                        display: ['Barlow Condensed', 'sans-serif'],
+                    },
+                    colors: {
+                        'bahia-teal': '#006978',   /* Turquesa Oscuro */
+                        'bahia-sand': '#E3DAC9',   /* Arena/Madera */
+                        'bahia-fire': '#FF7043',   /* Naranja Grill */
+                        'bahia-dark': '#102A30',   /* Fondo Oscuro */
+                        'bahia-light': '#F5F9FA',
+                    },
+                    backgroundImage: {
+                        'waves': "url('https://www.transparenttextures.com/patterns/washi.png')",
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fondo Hero: Ambiente de Playa/Terraza de noche */
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(16, 42, 48, 0.7), rgba(16, 42, 48, 0.4)), url('https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Marino */
+        .glass-marine {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(0, 105, 120, 0.15);
+        }
+
+        /* Acordeón */
+        .accordion-content {
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.active {
+            max-height: 600px;
+            opacity: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Botón Grill */
+        .btn-grill {
+            background: linear-gradient(45deg, #FF7043, #FF5722);
+            color: white;
+            transition: all 0.3s;
+        }
+        .btn-grill:hover {
+            box-shadow: 0 0 20px rgba(255, 87, 34, 0.5);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-bahia-light text-bahia-dark antialiased selection:bg-bahia-teal selection:text-white">
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 top-0 bg-bahia-dark/95 backdrop-blur-md shadow-lg border-b border-white/10 py-3">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 border-2 border-bahia-fire rounded flex items-center justify-center text-bahia-fire group-hover:bg-bahia-fire group-hover:text-white transition-all">
+                    <i class="ph-fill ph-fire text-2xl"></i>
+                </div>
+                <div class="leading-none">
+                    <h1 class="font-display font-bold text-2xl text-white tracking-wider">BAHIA GRILL</h1>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Copiapó</p>
+                </div>
+            </a>
+
+            <!-- Botones -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleLanguage()" class="hidden md:flex items-center gap-1 border border-gray-600 px-3 py-1 rounded text-xs font-bold text-gray-300 hover:border-bahia-fire hover:text-bahia-fire transition-colors">
+                    <i class="ph-bold ph-globe"></i> <span id="lang-text">ES</span>
+                </button>
+                
+                <a href="https://wa.me/56985400424" class="btn-grill px-6 py-2 rounded font-bold shadow-lg flex items-center gap-2 text-sm tracking-wide">
+                    <i class="ph-bold ph-calendar-check"></i> 
+                    <span class="lang" data-es="Reservar" data-en="Reserve">Reservar</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-bg min-h-screen flex items-center justify-center relative pt-24 pb-12">
+        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+            
+            <!-- Texto Principal -->
+            <div class="text-center lg:text-left reveal active">
+                <div class="inline-flex items-center gap-2 bg-bahia-teal/20 backdrop-blur-md border border-bahia-teal/50 text-bahia-light px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+                    <i class="ph-fill ph-waves"></i> <span class="lang" data-es="Experiencia Costera" data-en="Coastal Experience">Experiencia Costera</span>
+                </div>
+                
+                <h1 class="font-display text-6xl md:text-8xl font-bold text-white mb-6 leading-none shadow-black drop-shadow-lg">
+                    <span class="lang" data-es="FUEGO" data-en="FIRE">FUEGO</span> <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-bahia-fire to-yellow-400">
+                        & <span class="lang" data-es="MAR" data-en="SEA">MAR</span>
+                    </span>
+                </h1>
+                
+                <p class="text-lg text-gray-300 mb-10 font-light leading-relaxed max-w-lg mx-auto lg:mx-0 lang" 
+                   data-es="Donde la parrilla ardiente se encuentra con la frescura del océano. Disfruta de la mejor terraza de Copiapó hasta la madrugada."
+                   data-en="Where the burning grill meets the freshness of the ocean. Enjoy the best terrace in Copiapó until dawn.">
+                   Donde la parrilla ardiente se encuentra con la frescura del océano. Disfruta de la mejor terraza de Copiapó hasta la madrugada.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#menu" class="bg-white text-bahia-dark hover:bg-bahia-sand px-8 py-3 rounded font-bold shadow-xl transition-all flex items-center justify-center gap-2 uppercase tracking-wide text-sm">
+                        <i class="ph-bold ph-book-open"></i> <span class="lang" data-es="Ver Carta" data-en="View Menu">Ver Carta</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PANEL DE HORARIOS (Lógica Nocturna) -->
+            <div class="relative z-10 reveal active delay-100 w-full max-w-md mx-auto">
+                <div class="glass-marine rounded-xl overflow-hidden p-1 shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
+                    <!-- Cabecera Clickable -->
+                    <div class="bg-bahia-light p-6 rounded-t-lg flex items-center justify-between cursor-pointer hover:bg-white transition-colors border-b border-gray-200" onclick="toggleHours()">
+                        <div class="flex items-center gap-4">
+                            <!-- Indicador Luz -->
+                            <div class="relative">
+                                <div id="status-light" class="w-3 h-3 rounded-full bg-gray-400 ring-2 ring-gray-200"></div>
+                                <div id="status-ping" class="absolute top-0 left-0 w-3 h-3 rounded-full bg-gray-400 animate-ping opacity-75 hidden"></div>
+                            </div>
+                            <div>
+                                <h3 id="status-text" class="font-display font-bold text-xl text-bahia-dark">...</h3>
+                                <p class="text-[10px] text-gray-500 font-bold tracking-widest uppercase lang" data-es="Horario Nocturno" data-en="Night Schedule">Horario Nocturno</p>
+                            </div>
+                        </div>
+                        <div class="bg-bahia-teal/10 p-2 rounded text-bahia-teal">
+                            <i id="chevron" class="ph-bold ph-caret-down text-xl transition-transform duration-300"></i>
+                        </div>
+                    </div>
+
+                    <!-- Lista Desplegable -->
+                    <div id="hours-list" class="accordion-content bg-white/80 text-gray-700">
+                        <div class="p-6 space-y-3 text-sm">
+                             <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                <span class="font-bold text-gray-500 lang" data-es="Lun - Jue" data-en="Mon - Thu">Lun - Jue</span>
+                                <span class="font-bold text-bahia-teal">09:00 - 02:00 <small class="text-xs text-bahia-fire">(AM)</small></span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                <span class="font-bold text-gray-500 lang" data-es="Vie - Sáb" data-en="Fri - Sat">Vie - Sáb</span>
+                                <span class="font-bold text-bahia-teal">09:00 - 03:00 <small class="text-xs text-bahia-fire">(AM)</small></span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-gray-500 lang" data-es="Domingo" data-en="Sunday">Domingo</span>
+                                <span class="font-bold text-bahia-teal">09:00 - 00:00</span>
+                            </div>
+                            
+                            <div class="mt-4 pt-3 text-center border-t border-gray-100">
+                                <a href="https://maps.google.com/?q=Chañarcillo+860,+Copiapó" target="_blank" class="text-xs font-bold text-bahia-dark hover:text-bahia-fire flex items-center justify-center gap-1 uppercase tracking-widest transition-colors">
+                                    <i class="ph-fill ph-map-pin text-bahia-fire"></i> Chañarcillo 860, Copiapó
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENU DESTACADO -->
+    <section id="menu" class="py-24 bg-bahia-light relative">
+        <div class="absolute inset-0 bg-waves opacity-5 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-bahia-fire font-bold tracking-widest uppercase text-xs mb-2 block font-sans lang" data-es="Recomendaciones del Chef" data-en="Chef's Recommendations">Recomendaciones del Chef</span>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-bahia-dark mb-4">
+                    <span class="lang" data-es="Especialidades" data-en="Specialties">Especialidades</span>
+                </h2>
+                <div class="w-16 h-1.5 bg-bahia-teal mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                
+                <!-- 1. PULPO A LA PARRILLA -->
+                <div class="bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 group reveal overflow-hidden border-b-4 border-bahia-fire">
+                    <div class="h-64 overflow-hidden relative">
+                         <div class="absolute top-4 left-4 bg-bahia-fire text-white font-bold px-3 py-1 rounded text-xs z-10 shadow-md">Star Dish</div>
+                        <img src="https://images.unsplash.com/photo-1599321955726-908045e926e0?q=80&w=800" alt="Pulpo Parrilla" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-8 relative">
+                        <i class="ph-fill ph-fire text-4xl text-bahia-fire/20 absolute top-4 right-4"></i>
+                        <h3 class="font-display font-bold text-3xl text-bahia-dark mb-2 lang" data-es="Pulpo Grill" data-en="Grilled Octopus">Pulpo Grill</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed mb-4 lang" data-es="Tentáculos de pulpo asados a la perfección, servidos con papas rústicas y salsa de la casa." data-en="Octopus tentacles grilled to perfection, served with rustic potatoes and house sauce.">Tentáculos de pulpo asados a la perfección, servidos con papas rústicas y salsa de la casa.</p>
+                        <span class="text-bahia-teal font-bold text-lg">Recomendado</span>
+                    </div>
+                </div>
+
+                <!-- 2. CEVICHE DE ROCA -->
+                <div class="bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 group reveal delay-100 overflow-hidden border-b-4 border-bahia-teal">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1535400255456-984241443b29?q=80&w=800" alt="Ceviche" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-8 relative">
+                        <i class="ph-fill ph-fish text-4xl text-bahia-teal/20 absolute top-4 right-4"></i>
+                        <h3 class="font-display font-bold text-3xl text-bahia-dark mb-2 lang" data-es="Ceviche de Roca" data-en="Rock Ceviche">Ceviche de Roca</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed mb-4 lang" data-es="Fresco pescado de roca marinado en limón sutil, acompañado de quesadillas de camarón." data-en="Fresh rock fish marinated in subtle lime, accompanied by shrimp quesadillas.">Fresco pescado de roca marinado en limón sutil, acompañado de quesadillas de camarón.</p>
+                        <span class="text-bahia-fire font-bold text-lg">Fresco</span>
+                    </div>
+                </div>
+
+            </div>
+            
+             <div class="mt-12 text-center">
+                <a href="https://wa.me/56985400424?text=Hola,%20quiero%20ver%20la%20carta." class="inline-flex items-center gap-2 text-bahia-dark font-bold hover:text-bahia-teal transition-colors border-2 border-bahia-dark px-6 py-2 rounded-full hover:border-bahia-teal">
+                    <i class="ph-bold ph-list-dashes"></i> <span class="lang" data-es="Ver Menú Completo" data-en="See Full Menu">Ver Menú Completo</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-bahia-dark text-white pt-16 pb-12 border-t border-bahia-teal/30">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            
+            <div class="text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-3 mb-6">
+                    <i class="ph-fill ph-anchor text-bahia-teal text-3xl"></i>
+                    <h3 class="font-display text-3xl font-bold tracking-wide">BAHIA GRILL</h3>
+                </div>
+                
+                <div class="space-y-4 text-gray-400 text-sm font-light">
+                    <a href="https://maps.google.com/?q=Chañarcillo+860,+Copiapó" target="_blank" class="flex items-center justify-center md:justify-start gap-3 hover:text-white transition-colors">
+                        <i class="ph-fill ph-map-pin text-bahia-fire text-lg"></i>
+                        Chañarcillo 860, Copiapó, Chile
+                    </a>
+                    <a href="tel:+56985400424" class="flex items-center justify-center md:justify-start gap-3 hover:text-white transition-colors">
+                        <i class="ph-fill ph-phone text-bahia-teal text-lg"></i>
+                        +56 9 8540 0424
+                    </a>
+                    <div class="flex items-center justify-center md:justify-start gap-3">
+                         <i class="ph-fill ph-clock text-gray-500 text-lg"></i>
+                         <p class="lang" data-es="Abierto todos los días desde las 09:00" data-en="Open daily from 09:00">Abierto todos los días desde las 09:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa Estático -->
+            <div class="rounded-lg overflow-hidden h-60 border border-bahia-teal/30 relative shadow-2xl grayscale hover:grayscale-0 transition-all duration-500">
+                 <iframe 
+                    src="https://maps.google.com/maps?q=Chañarcillo+860,+Copiapó,+Atacama,+Chile&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                 </iframe>
+            </div>
+
+        </div>
+        <div class="text-center mt-12 text-xs text-gray-600 uppercase tracking-widest">
+            &copy; 2026 Bahia Grill. <span class="lang" data-es="Sabor local." data-en="Local flavor.">Sabor local.</span>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-4 items-end">
+        
+        <!-- Botón Llamar (Solo Móvil) -->
+        <a href="tel:+56985400424" class="md:hidden w-14 h-14 bg-white text-bahia-dark rounded-full shadow-lg flex items-center justify-center border-2 border-bahia-teal hover:scale-110 transition-transform duration-300">
+            <i class="ph-fill ph-phone-call text-2xl animate-pulse text-bahia-fire"></i>
+        </a>
+
+        <!-- Botón WhatsApp (Principal) -->
+        <a href="https://wa.me/56985400424?text=Hola%20Bahia%20Grill,%20quisiera%20reservar." target="_blank" class="group relative w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 hover:shadow-[0_0_20px_rgba(37,211,102,0.4)] border-4 border-white">
+            <i class="ph-fill ph-whatsapp-logo text-3xl"></i>
+            
+            <!-- Tooltip -->
+            <span class="absolute right-full mr-4 bg-bahia-dark text-white border border-bahia-teal px-4 py-2 rounded text-xs font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden md:block uppercase tracking-wide">
+                <span class="lang" data-es="¡Reserva Ya!" data-en="Book Now!">¡Reserva Ya!</span>
+            </span>
+        </a>
+    </div>
+
+    <!-- LÓGICA -->
+    <script>
+        // 1. SCROLL REVEAL
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // 2. TOGGLE HORARIOS
+        function toggleHours() {
+            const list = document.getElementById('hours-list');
+            const chevron = document.getElementById('chevron');
+            list.classList.toggle('active');
+            
+            if (list.classList.contains('active')) {
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // 3. LOGICA HORARIOS AVANZADA (CIERRE DE MADRUGADA)
+        // Lun-Jue: 09:00 - 02:00
+        // Vie-Sab: 09:00 - 03:00
+        // Dom: 09:00 - 00:00
+        function checkStatus() {
+            try {
+                const now = new Date();
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/Santiago',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    weekday: 'short',
+                    hour12: false
+                });
+
+                const parts = formatter.formatToParts(now);
+                const hour = parseInt(parts.find(p => p.type === 'hour').value);
+                const minute = parseInt(parts.find(p => p.type === 'minute').value);
+                const day = parts.find(p => p.type === 'weekday').value; 
+                const currentTime = hour + (minute / 60);
+
+                let isOpen = false;
+
+                // Logica: Si es de madrugada (00:00 - 03:00), chequear el día anterior conceptualmente
+                // O simplemente chequear rangos absolutos.
+                
+                // Rango común de apertura matutina (todos abren a las 09:00)
+                if (currentTime >= 9) {
+                     // Lun-Jue cierran a las 24:00 (en realidad siguen hasta las 02:00, cubierto abajo)
+                     // Dom cierra a las 00:00
+                     if (day === 'Sun') {
+                         if (currentTime < 24) isOpen = true;
+                     } else {
+                         // Los demás días abren de 09:00 a 24:00 y siguen
+                         isOpen = true; 
+                     }
+                } 
+                // Rango de Madrugada (00:00 - 03:00)
+                else {
+                    // Si es madrugada de Martes, Miercoles, Jueves, Viernes (corresponde a cierre de Lun-Jue) -> hasta las 02:00
+                    if (['Tue', 'Wed', 'Thu', 'Fri'].includes(day)) {
+                        if (currentTime < 2) isOpen = true;
+                    }
+                    // Si es madrugada de Sábado o Domingo (corresponde a cierre de Vie-Sab) -> hasta las 03:00
+                    else if (['Sat', 'Sun'].includes(day)) {
+                        if (currentTime < 3) isOpen = true;
+                    }
+                    // Si es madrugada de Lunes (corresponde a cierre de Domingo) -> Domingo cierra a las 00:00, asi que Lunes a las 00:01 está cerrado.
+                }
+
+                const lang = document.getElementById('lang-text').innerText;
+                const light = document.getElementById('status-light');
+                const ping = document.getElementById('status-ping');
+                const text = document.getElementById('status-text');
+
+                if (isOpen) {
+                    light.className = "w-3 h-3 rounded-full bg-green-500 ring-2 ring-gray-200 shadow-[0_0_15px_rgba(34,197,94,0.8)]";
+                    ping.classList.remove('hidden');
+                    text.innerText = lang === 'ES' ? "ABIERTO" : "OPEN";
+                    text.className = "font-display font-bold text-xl text-green-500 tracking-wide";
+                } else {
+                    light.className = "w-3 h-3 rounded-full bg-red-500 ring-2 ring-gray-200";
+                    ping.classList.add('hidden');
+                    text.innerText = lang === 'ES' ? "CERRADO" : "CLOSED";
+                    text.className = "font-display font-bold text-xl text-red-500 tracking-wide";
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // 4. IDIOMA
+        function toggleLanguage() {
+            const btn = document.getElementById('lang-text');
+            const isSpanish = btn.innerText === 'ES';
+            const target = isSpanish ? 'en' : 'es';
+            
+            btn.innerText = isSpanish ? 'EN' : 'ES';
+
+            document.querySelectorAll('.lang').forEach(el => {
+                if (el.dataset[target]) {
+                    el.style.opacity = '0';
+                    setTimeout(() => {
+                        el.innerText = el.dataset[target];
+                        el.style.opacity = '1';
+                    }, 200);
+                }
+            });
+            setTimeout(checkStatus, 200);
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            reveal();
+            checkStatus();
+        });
+        
+        setInterval(checkStatus, 60000);
+    </script>
+</body>
+</html>
